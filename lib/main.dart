@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-// URL http://192.168.86.31:5001/api/data
 import 'dart:async';
 
 void main() {
@@ -25,8 +24,10 @@ class WifiApp extends StatefulWidget {
 
 class _WifiAppState extends State<WifiApp> {
   String collectedData = "No data yet";
-  Duration refreshRate = Duration(seconds: 5); // Adjust refresh rate as needed
+  Duration refreshRate = Duration(seconds: 2);
   late Timer dataTimer;
+
+  TextEditingController urlController = TextEditingController();
 
   @override
   void initState() {
@@ -38,7 +39,15 @@ class _WifiAppState extends State<WifiApp> {
   }
 
   Future<void> fetchData() async {
-    final response = await http.get(Uri.parse('http://192.168.86.31:5001/api/data'));
+    final url = urlController.text;
+    if (url.isEmpty) {
+      setState(() {
+        collectedData = "URL is empty";
+      });
+      return;
+    }
+
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       setState(() {
         collectedData = json.decode(response.body).toString();
@@ -53,7 +62,7 @@ class _WifiAppState extends State<WifiApp> {
   @override
   void dispose() {
     super.dispose();
-    dataTimer.cancel(); // Cancel the timer when the widget is disposed
+    dataTimer.cancel();
   }
 
   @override
@@ -66,6 +75,21 @@ class _WifiAppState extends State<WifiApp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text('Enter URL:', style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
+            TextField(
+              controller: urlController,
+              decoration: InputDecoration(
+                hintText: 'Enter the URL',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: fetchData,
+              child: Text('Fetch Data'),
+            ),
+            SizedBox(height: 20),
             Text('Collected Data:', style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
             Text(collectedData, style: TextStyle(fontSize: 16)),
