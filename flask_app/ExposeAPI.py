@@ -12,7 +12,7 @@ def generate_random_temperature_celsius():
 @app.route('/')
 def get_data():
     data = {
-        'temperature': generate_random_temperature_celsius()
+        'temperature': generate_random_temperature_celsius(),
         'random': random.uniform(0, 10000)
     }
     return jsonify(data)
