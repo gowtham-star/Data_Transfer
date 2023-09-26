@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'databasehelper.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,8 +25,10 @@ class WifiApp extends StatefulWidget {
 
 class _WifiAppState extends State<WifiApp> {
   String collectedData = "No data yet";
-  Duration refreshRate = Duration(seconds: 2);
+  Duration refreshRate = Duration(seconds: 5);
+  List<PiDataModel>  databaseData= [];
   late Timer dataTimer;
+  String debugOutput = "Null";
 
   TextEditingController urlController = TextEditingController();
 
@@ -64,6 +67,12 @@ class _WifiAppState extends State<WifiApp> {
       );
       dbHelper.insertdata(dataObj);
 
+      //Display data from database
+       final result = await dbHelper.getdata();
+       setState(() {
+         databaseData = result;
+       });
+
     } else {
       setState(() {
         collectedData = "Error fetching data";
@@ -76,6 +85,7 @@ class _WifiAppState extends State<WifiApp> {
     super.dispose();
     dataTimer.cancel();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,10 +115,15 @@ class _WifiAppState extends State<WifiApp> {
             Text('Collected Data:', style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
             Text(collectedData, style: TextStyle(fontSize: 16)),
-            SizedBox(height: 20)
+            SizedBox(height: 20),
+            //_buildLineChart(),
           ],
         ),
       ),
     );
   }
+
 }
+
+
+

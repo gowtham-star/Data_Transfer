@@ -2,9 +2,15 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class PiDataModel {
-  final DateTime  timeStamp;
+  final int  timeStamp;
   final int temperature;
   final int random;
+
+  // Empty constructor
+  PiDataModel.empty()
+      : timeStamp = 0,
+        temperature = 0,
+        random = 0;
 
   const PiDataModel({
     required this.timeStamp,
@@ -23,13 +29,11 @@ class PiDataModel {
 
   factory PiDataModel.fromMap(Map<String, dynamic> map) {
     return PiDataModel(
-      timeStamp: map['timeStamp'],
+      timeStamp: map['timestamp'],
       temperature: map['temperature'],
       random: map['random'],
     );
   }
-  // Implement toString to make it easier to see information about
-  // each dog when using the print statement.
   @override
   String toString() {
     return 'PiDataModel{timeStamp: $timeStamp, temparature: $temperature, random: $random}';
@@ -61,19 +65,22 @@ class PiDatabase {
       CREATE TABLE pi_data_table (
         timestamp INTEGER PRIMARY KEY,
         temperature INTEGER,
-        random INTEGER,
+        random INTEGER
       )
     ''');
   }
 
   Future<int> insertdata(PiDataModel piDataModel) async {
     final db = await database;
-    return await db.insert('pi_data_table', piDataModel.toMap());
+    return await db.insert('pi_data_table', piDataModel.toMap(),conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   Future<List<PiDataModel>> getdata() async {
     final db = await database;
     final maps = await db.query('pi_data_table');
+    if (maps.length == 0){
+      return [];
+    }
     return List.generate(maps.length, (i) {
       return PiDataModel.fromMap(maps[i]);
     });
