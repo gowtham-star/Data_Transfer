@@ -4,6 +4,13 @@ import 'dart:convert';
 import 'dart:async';
 import 'databasehelper.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:csv/csv.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:typed_data';
+import 'package:permission_handler/permission_handler.dart';
+import 'chartspage.dart';
 
 
 void main() {
@@ -26,7 +33,7 @@ class WifiApp extends StatefulWidget {
 
 class _WifiAppState extends State<WifiApp> {
   String collectedData = "No data yet";
-  Duration refreshRate = Duration(seconds: 2);
+  Duration refreshRate = Duration(seconds: 1);
   List<PiDataModel>  databaseData= [];
   late Timer dataTimer;
   String debugOutput = "Null";
@@ -89,6 +96,63 @@ class _WifiAppState extends State<WifiApp> {
 
 
 
+  Future<void> downloadCsv() async {
+    final dbHelper = PiDatabase.instance;
+    final result = await dbHelper.getdata();
+
+    final List<List<dynamic>> rows = [];
+
+    // Convert PiDataModel objects to lists of values
+    for (var data in result) {
+      rows.add([
+        data.timeStamp,
+        data.temperature,
+        data.random,
+      ]);
+    }
+
+    final csvData = const ListToCsvConverter().convert(rows);
+
+    // Request permission to access the selected directory
+    final status = await Permission.storage.request();
+    if (status.isGranted) {
+      // Use the file picker to choose the folder location to save the file
+      String? result = await FilePicker.platform.getDirectoryPath();
+
+      if (result != null) {
+        final folderPath = result;
+
+        final file = File('$folderPath/pi_data.csv');
+        await file.writeAsString(csvData);
+
+        // Show a dialog or snackbar to inform the user that the download is complete.
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('CSV Downloaded'),
+              content: Text('CSV file has been downloaded successfully to $folderPath/pi_data.csv'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        // Handle the case where the user cancels the folder selection.
+        // You can show a message to inform the user.
+      }
+    } else {
+      // Handle the case where permission is not granted.
+      // You can show a message to inform the user.
+    }
+  }
+
 
 
   @override
@@ -117,38 +181,28 @@ class _WifiAppState extends State<WifiApp> {
                 child: Text('Fetch Data'),
               ),
               SizedBox(height: 20),
-              Text('Collected Data:', style: TextStyle(fontSize: 18)),
+              Text('Realtime Data:', style: TextStyle(fontSize: 18)),
               SizedBox(height: 10),
               Text(collectedData, style: TextStyle(fontSize: 16)),
-
               SizedBox(height: 20),
-
-              SfCartesianChart(
-                  primaryXAxis: DateTimeAxis(),
-                  series: <ChartSeries<PiDataModel, DateTime>>[
-                    LineSeries<PiDataModel, DateTime>(
-                      dataSource: databaseData,
-                      xValueMapper: (PiDataModel timeseriesdata, _) =>
-                      new DateTime.fromMillisecondsSinceEpoch(timeseriesdata.timeStamp),
-                      yValueMapper: (PiDataModel timeseriesdata, _) =>
-                      timeseriesdata.temperature,
-                    )
-                  ],
-                ),
-
-
-                SfCartesianChart(
-                  primaryXAxis: DateTimeAxis(),
-                  series: <ChartSeries<PiDataModel, DateTime>>[
-                    LineSeries<PiDataModel, DateTime>(
-                      dataSource: databaseData,
-                      xValueMapper: (PiDataModel timeseriesdata, _) =>
-                      new DateTime.fromMillisecondsSinceEpoch(timeseriesdata.timeStamp),
-                      yValueMapper: (PiDataModel timeseriesdata, _) =>
-                      timeseriesdata.random,
-                    )
-                  ],
-                ),
+              ElevatedButton(
+                onPressed: () {
+                  downloadCsv();
+                },
+                child: Text('Download CSV'),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChartsPage(databaseData: databaseData),
+                    ),
+                  );
+                },
+                child: Text('View Charts'),
+              ),
 
             ],
           ),
