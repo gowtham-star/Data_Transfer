@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'dart:async';
+import 'databasehelper.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,9 +49,21 @@ class _WifiAppState extends State<WifiApp> {
 
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
+       final jsonData = json.decode(response.body);
       setState(() {
-        collectedData = json.decode(response.body).toString();
+        collectedData = jsonData.toString();
       });
+
+      //Storing data in database
+      final dbHelper =  PiDatabase.instance;
+      // Make changes based attribute names here
+      var dataObj =  PiDataModel(
+        timeStamp: jsonData["timeStamp"],
+        temperature: jsonData["temperature"],
+        random: jsonData["random"],
+      );
+      dbHelper.insertdata(dataObj);
+
     } else {
       setState(() {
         collectedData = "Error fetching data";

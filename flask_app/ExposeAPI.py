@@ -1,19 +1,23 @@
 from flask import Flask, jsonify
 import random
+import time
 
 #Flask App Initalisation
 app = Flask(__name__)
 
 def generate_random_temperature_celsius():
     # Generate a random temperature between -20°C and 40°C
-    temperature = random.uniform(-20, 40)
-    return temperature
+    return random.uniform(-20, 40)
+
+def generate_random_attribute():
+    return random.randint(1, 100)
 
 @app.route('/')
 def get_data():
     data = {
+        'timeStamp': int(time.time()),
         'temperature': generate_random_temperature_celsius(),
-        'random': random.uniform(0, 10000)
+        'random': generate_random_attribute()
     }
     return jsonify(data)
 
