@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 def generate_random_temperature_celsius():
     # Generate a random temperature between -20°C and 40°C
-    return random.uniform(-20, 40)
+    return random.randint(-20, 40)
 
 def generate_random_attribute():
     return random.randint(1, 100)
@@ -15,7 +15,7 @@ def generate_random_attribute():
 @app.route('/')
 def get_data():
     data = {
-        'timeStamp': int(time.time()),
+        'timeStamp': int(time.time()*1000),
         'temperature': generate_random_temperature_celsius(),
         'random': generate_random_attribute()
     }

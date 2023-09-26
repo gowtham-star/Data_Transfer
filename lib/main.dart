@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'databasehelper.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -25,7 +26,7 @@ class WifiApp extends StatefulWidget {
 
 class _WifiAppState extends State<WifiApp> {
   String collectedData = "No data yet";
-  Duration refreshRate = Duration(seconds: 5);
+  Duration refreshRate = Duration(seconds: 2);
   List<PiDataModel>  databaseData= [];
   late Timer dataTimer;
   String debugOutput = "Null";
@@ -87,41 +88,76 @@ class _WifiAppState extends State<WifiApp> {
   }
 
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wi-Fi App'),
+        title: Text('Rasperberrypi Data Collection and Visualizer'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Enter URL:', style: TextStyle(fontSize: 18)),
-            SizedBox(height: 10),
-            TextField(
-              controller: urlController,
-              decoration: InputDecoration(
-                hintText: 'Enter the URL',
-                border: OutlineInputBorder(),
+        child: Scrollbar( // Wrap your ListView with Scrollbar
+          child: ListView(
+            padding: EdgeInsets.all(16.0),
+            children: [
+              Text('Enter URL:', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 10),
+              TextField(
+                controller: urlController,
+                decoration: InputDecoration(
+                  hintText: 'Enter the URL',
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: fetchData,
-              child: Text('Fetch Data'),
-            ),
-            SizedBox(height: 20),
-            Text('Collected Data:', style: TextStyle(fontSize: 18)),
-            SizedBox(height: 10),
-            Text(collectedData, style: TextStyle(fontSize: 16)),
-            SizedBox(height: 20),
-            //_buildLineChart(),
-          ],
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: fetchData,
+                child: Text('Fetch Data'),
+              ),
+              SizedBox(height: 20),
+              Text('Collected Data:', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 10),
+              Text(collectedData, style: TextStyle(fontSize: 16)),
+
+              SizedBox(height: 20),
+
+              SfCartesianChart(
+                  primaryXAxis: DateTimeAxis(),
+                  series: <ChartSeries<PiDataModel, DateTime>>[
+                    LineSeries<PiDataModel, DateTime>(
+                      dataSource: databaseData,
+                      xValueMapper: (PiDataModel timeseriesdata, _) =>
+                      new DateTime.fromMillisecondsSinceEpoch(timeseriesdata.timeStamp),
+                      yValueMapper: (PiDataModel timeseriesdata, _) =>
+                      timeseriesdata.temperature,
+                    )
+                  ],
+                ),
+
+
+                SfCartesianChart(
+                  primaryXAxis: DateTimeAxis(),
+                  series: <ChartSeries<PiDataModel, DateTime>>[
+                    LineSeries<PiDataModel, DateTime>(
+                      dataSource: databaseData,
+                      xValueMapper: (PiDataModel timeseriesdata, _) =>
+                      new DateTime.fromMillisecondsSinceEpoch(timeseriesdata.timeStamp),
+                      yValueMapper: (PiDataModel timeseriesdata, _) =>
+                      timeseriesdata.random,
+                    )
+                  ],
+                ),
+
+            ],
+          ),
         ),
       ),
     );
   }
+
+
 
 }
 
