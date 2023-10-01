@@ -28,7 +28,7 @@ This project involves in transferring real time data such as temperature from ra
 2. Using Android Studio import the project as a flutter application
 3. Click on build option on android studio IDE and select ```Flutter -> Build APK```
 4. Copy the apk file from ```build->outputs->flutter-apk->app-release.apk``` to the desired location and run the app on android device
-5. (or) Download the apk file from the repository home folder
+5. (or) Use the apk file from the repository home folder
 6. Once the app is opened give the URL generated on pi side and to connect
 7. Now you can visualise the real time data on home screen and visualize charts by clicking the view charts button
 8. The download csv button can be used to download a csv file
