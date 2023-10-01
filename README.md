@@ -18,8 +18,9 @@ This project involves in transferring real time data such as temperature from ra
 4. Run the following command to run the the flask server to host the api to push data.
    Note: The ExposeAPI script generates random temparature data.
    ``` source venv/bin/activate ```
+   
    ``` python ExposeAPI.py  ```
-5. The exposed server URL ``` http://x.x.x.x:5500 ``` and the local newtowrk ip address ```x.x.x.x``` of pi can be found out using ``` ifconfig ``` command
+6. The exposed server URL ``` http://x.x.x.x:5500 ``` and the local newtowrk ip address ```x.x.x.x``` of pi can be found out using ``` ifconfig ``` command
    
 
 ### Flutter App side
