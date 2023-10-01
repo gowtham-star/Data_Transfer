@@ -31,7 +31,7 @@ This project involves in transferring real time data such as temperature from ra
 6. Once the app is opened give the URL generated on pi side and to connect
 8. Now you can visualise the real time data on home screen and visualize charts by clicking the view charts button
 
-Note: Make sure both the pi and app are connected to the same wifi network. 
+** Note: Make sure both the pi and app are connected to the same wifi network.  **
 
 ## Instructions to add new attributes
 
