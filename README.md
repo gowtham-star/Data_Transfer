@@ -1,6 +1,9 @@
-# data_transfer
+# Data Transfer Flutter Application
 
-A project to collect data from rasperberry pi
+This project involves in connecting a flutter app and a rasperberry pi device. The flutter app has three major feature
+1. The app collects real time data and stores in a local sqlite database
+2. The app allows you to download this real time data in a csv format in local stoarage
+3. The app provides you with visualization of the data using line charts
 
 ## Getting Started
 
