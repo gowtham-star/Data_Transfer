@@ -37,7 +37,10 @@ This project involves in transferring real time data such as temperature from ra
 
 1. Modify the ```ExposeAPI.py```  script by adding new key-value attribute in the json structure part of the code
 2. In the flutter app code three changes have to be made
+
    a. In file ```databasehelper.dart``` Add a new attribute to ```PiDataModel``` class methods and also add the new attribute in  create table statement in ```_createDB``` method
+   
    b. In main.dart file add a new key-value pair in ```dataObj```  variable
+   
    c. In ```chartspage.dart``` copy the old charts code under the given column children and Change the Y axes data accordingly
 
