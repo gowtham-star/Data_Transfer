@@ -26,10 +26,18 @@ This project involves in connecting a flutter app and a rasperberry pi device. T
 
 1. Clone this repository to you local computer folder
 2. Using Android Studio import the project as a flutter application
-3. Click on build option on android studio IDE and select Flutter -> Build APK
-4. Copy the apk file from build->outputs->flutter-apk->app-release.apk to the desired location and run the app on android device (or) Download the apk file from the repository home folder
+3. Click on build option on android studio IDE and select ```Flutter -> Build APK```
+4. Copy the apk file from ```build->outputs->flutter-apk->app-release.apk``` to the desired location and run the app on android device (or) Download the apk file from the repository home folder
 6. Once the app is opened give the URL generated on pi side and to connect
 8. Now you can visualise the real time data on home screen and visualize charts by clicking the view charts button
 
 Note: Make sure both the pi and app are connected to the same wifi network. 
+
+## Instructions to add new attributes
+
+1. Modify the ```ExposeAPI.py```  script by adding new key-value attribute in the json structure part of the code
+2. In the flutter app code three changes have to be made
+   a. In file ```databasehelper.dart``` Add a new attribute to ```PiDataModel``` class methods and also add the new attribute in  create table statement in ```_createDB``` method
+   b. In main.dart file add a new key-value pair in ```dataObj```  variable
+   c. In ```chartspage.dart``` copy the old charts code under the given column children and Change the Y axes data accordingly
 
