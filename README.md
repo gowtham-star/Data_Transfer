@@ -1,19 +1,35 @@
-# data_transfer
+# Data Transfer Flutter Application
 
-A project to collect data from rasperberry pi
+## Introduction
 
-## Getting Started
+This project involves in connecting a flutter app and a rasperberry pi device. The flutter app has three major feature
+1. The app collects real time data and stores in a local sqlite database
+2. The app allows you to download this real time data in a csv format in local stoarage
+3. The app provides you with visualization of the data using line charts
 
-This project is a starting point for a Flutter application.
+## Instructions to use the project
 
-1. Run the flask app from flask_app folder in rasperberry pi to start the server
-2. Then run the flutter app to connect with appropraite api details to continously diplay real time data on screen
 
-A few resources to get you started if this is your first Flutter project:
+### Rasperberry pi side
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Download this repository on pi
+2. Copy the flask_app folder to the desktop
+3. Open the terminal on rasperberrypi and got the directory of flask_app folder
+4. Run the following command to run the the flask server to host the api to push data.
+   Note: The ExposeAPI script generates random temparature data.
+   ``` source venv/bin/activate ```
+   ``` python ExposeAPI.py  ```
+5. The exposed server URL ``` http://x.x.x.x:5500 ``` and the local newtowrk ip address ```x.x.x.x``` of pi can be found out using ``` ifconfig ``` command
+   
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Flutter App side
+
+1. Clone this repository to you local computer folder
+2. Using Android Studio import the project as a flutter application
+3. Click on build option on android studio IDE and select Flutter -> Build APK
+4. Copy the apk file from build->outputs->flutter-apk->app-release.apk to the desired location and run the app on android device (or) Download the apk file from the repository home folder
+6. Once the app is opened give the URL generated on pi side and to connect
+8. Now you can visualise the real time data on home screen and visualize charts by clicking the view charts button
+
+Note: Make sure both the pi and app are connected to the same network. 
+
