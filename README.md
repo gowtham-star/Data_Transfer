@@ -1,53 +1,70 @@
-# Data Transfer using WIFI Flutter Application
+# Data Transfer using Wi-Fi Flutter Application
+
+![App Preview](app_preview.png)
 
 ## Introduction
 
-This project involves in transferring real time data such as temperature from rasperberrypi to flutter application. This application has three major features.
-1. The app collects real time data and stores in a local sqlite database
-2. The app allows you to download this real time data in a csv format in local stoarage
-3. The app provides you with visualization of the data using line charts
+Welcome to the Data Transfer Wi-Fi Flutter Application! This project focuses on real-time data transfer, specifically temperature data, from a Raspberry Pi to a Flutter mobile application. The application boasts three powerful features:
 
-## Instructions to use the appliaction
-1. First follow rasperberyy side of the installation
-2. Then follow Flutter app installation
-3. Connect both the pi and phone to the same network and use the software and have fun :) 
+1. **Data Collection and Storage**: The app collects real-time data and stores it in a local SQLite database for future reference.
 
-### Rasperberry pi side
+2. **Data Export**: Seamlessly download the collected data in CSV format, making it easy to analyze or share.
 
-1. Download this repository on pi
-2. Copy the flask_app folder to the desktop
-3. Open the terminal on rasperberrypi and got the directory of flask_app folder
-4. Run the following command to run the the flask server to host the api to push data.
-   *** Note: The ExposeAPI script generates random temparature data. ***
+3. **Data Visualization**: The app provides interactive data visualization through line charts, helping you gain insights at a glance.
 
-   ``` source venv/bin/activate ```
+## Getting Started
+
+Getting up and running with our application is a breeze. Here's how to use it:
+
+1. **Raspberry Pi Setup**:
+   - Download this repository on your Raspberry Pi.
+   - Copy the `flask_app` folder to your desktop.
+   - Open the terminal on your Raspberry Pi and navigate to the `flask_app` directory.
+   - Run the following command to start the Flask server:
+     ```
+     source venv/bin/activate
+     python ExposeAPI.py
+     ```
+   - Find the exposed server URL, typically `http://x.x.x.x:5500`, and your Pi's local network IP address `x.x.x.x` using the `ifconfig` command.
+
+2. **Flutter App Installation**:
+   - Clone this repository to your local computer folder.
+   - Use Android Studio to import the project as a Flutter application.
+   - Build the APK by clicking on `Flutter -> Build APK` in Android Studio.
+   - Copy the APK file from `build->outputs->flutter-apk->app-release.apk` to your desired location.
+   - Run the app on your Android device or use the provided APK file.
    
-   ``` python ExposeAPI.py  ```
-6. The exposed server URL ``` http://x.x.x.x:5500 ``` and the local newtowrk ip address ```x.x.x.x``` of pi can be found out using ``` ifconfig ``` command
-   
+3. **Connect and Explore**:
+   - After opening the app, enter the URL generated on the Pi side to establish a connection.
+   - Start seeing real-time data on the home screen.
+   - Dive deeper by exploring interactive charts via the "View Charts" button.
+   - Download data in CSV format using the "Download CSV" button.
 
-### Flutter App side
+Enjoy seamless data transfer and exploration!
 
-1. Clone this repository to you local computer folder
-2. Using Android Studio import the project as a flutter application
-3. Click on build option on android studio IDE and select ```Flutter -> Build APK```
-4. Copy the apk file from ```build->outputs->flutter-apk->app-release.apk``` to the desired location and run the app on android device
-5. (or) Use the apk file from the repository home folder
-6. Once the app is opened give the URL generated on pi side and to connect
-7. Now you can visualise the real time data on home screen and visualize charts by clicking the view charts button
-8. The download csv button can be used to download a csv file
+![Data Visualization](chart_preview.png)
 
-*** ⚠️ Note: Make sure both the pi and app are connected to the same wifi network.  ***
+## Adding New Attributes
 
-## Instructions to add new attributes
+We've made it easy to expand the capabilities of our application. Here's how to add new attributes:
 
-1. Modify the ```ExposeAPI.py```  script by adding new key-value attribute in the json structure part of the code
-2. In the flutter app code three changes have to be made
+1. **Modify `ExposeAPI.py` on the Raspberry Pi**:
+   - Update the script by adding new key-value attributes within the JSON structure section.
 
-   a. In file ```databasehelper.dart``` Add a new attribute to ```PiDataModel``` class methods and also add the new attribute in  create table statement in ```_createDB``` method
-   
-   b. In main.dart file add a new key-value pair in ```dataObj```  variable
-   
-   c. In ```chartspage.dart``` copy the old charts code under the given column children and Change the Y axes data accordingly
+2. **Update the Flutter App**:
+   - In the `databasehelper.dart` file:
+     - Add the new attribute to the `PiDataModel` class methods.
+     - Update the `create table` statement in the `_createDB` method to include the new attribute.
 
+   - In the `main.dart` file:
+     - Add a new key-value pair in the `dataObj` variable to handle the new attribute.
 
+   - In `chartspage.dart`, adapt the chart code to display the new attribute on the Y-axis.
+
+![Data Exploration](data_explore.png)
+
+Please note that both the Raspberry Pi and the mobile app should be connected to the same Wi-Fi network for seamless data transfer.
+
+Thank you for choosing  Data Transfer Wi-Fi Flutter Application. We hope you find it valuable and easy to use. If you have any questions or feedback, don't hesitate to reach out.
+
+Happy data exploration!
