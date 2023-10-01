@@ -16,7 +16,8 @@ This project involves in transferring real time data such as temperature from ra
 2. Copy the flask_app folder to the desktop
 3. Open the terminal on rasperberrypi and got the directory of flask_app folder
 4. Run the following command to run the the flask server to host the api to push data.
-   Note: The ExposeAPI script generates random temparature data.
+   *** Note: The ExposeAPI script generates random temparature data. ***
+
    ``` source venv/bin/activate ```
    
    ``` python ExposeAPI.py  ```
