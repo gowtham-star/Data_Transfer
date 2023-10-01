@@ -159,14 +159,14 @@ class _WifiAppState extends State<WifiApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rasperberrypi Data Collection and Visualizer'),
+        title: Text('Data collection and visualiser'),
       ),
       body: Center(
         child: Scrollbar( // Wrap your ListView with Scrollbar
           child: ListView(
             padding: EdgeInsets.all(16.0),
             children: [
-              Text('Enter URL:', style: TextStyle(fontSize: 18)),
+              Text('Enter Api URL:', style: TextStyle(fontSize: 18)),
               SizedBox(height: 10),
               TextField(
                 controller: urlController,
@@ -181,9 +181,19 @@ class _WifiAppState extends State<WifiApp> {
                 child: Text('Fetch Data'),
               ),
               SizedBox(height: 20),
-              Text('Realtime Data:', style: TextStyle(fontSize: 18)),
-              SizedBox(height: 10),
-              Text(collectedData, style: TextStyle(fontSize: 16)),
+              Container(
+                padding: EdgeInsets.all(10), // Adjust the padding as needed
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1), // Add a border for better visual separation
+                ),
+                child: Text(
+                  collectedData,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black, // Change the text color as needed
+                  ),
+                ),
+              ),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
