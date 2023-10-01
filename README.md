@@ -7,8 +7,10 @@ This project involves in transferring real time data such as temperature from ra
 2. The app allows you to download this real time data in a csv format in local stoarage
 3. The app provides you with visualization of the data using line charts
 
-## Instructions to use the project
-
+## Instructions to use the appliaction
+1. First follow rasperberyy side of the installation
+2. Then follow Flutter app installation
+3. Connect both the pi and phone to the same network and use the software and have fun :) 
 
 ### Rasperberry pi side
 
@@ -47,4 +49,5 @@ This project involves in transferring real time data such as temperature from ra
    b. In main.dart file add a new key-value pair in ```dataObj```  variable
    
    c. In ```chartspage.dart``` copy the old charts code under the given column children and Change the Y axes data accordingly
+
 
