@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project involves in connecting a flutter app and a rasperberry pi device. The flutter app has three major feature
+This project involves in transferring real time data such as temperature from rasperberrypi to flutter application. This application has three major features.
 1. The app collects real time data and stores in a local sqlite database
 2. The app allows you to download this real time data in a csv format in local stoarage
 3. The app provides you with visualization of the data using line charts
