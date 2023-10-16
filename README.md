@@ -31,7 +31,7 @@ Getting up and running with our application is a breeze. Here's how to use it:
    - Clone this repository to your local computer folder.
    - Use Android Studio to import the project as a Flutter application.
    - Build the APK by clicking on `Flutter -> Build APK` in Android Studio.
-   - Copy the APK file from `build->outputs->flutter-apk->app-release.apk` to your desired location.
+   - Copy the APK file from `build->app->outputs->flutter-apk->app-release.apk` to your desired location.
    - Run the app on your Android device or use the provided APK file.
    
 3. **Connect and Explore**:
