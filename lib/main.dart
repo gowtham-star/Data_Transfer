@@ -166,12 +166,12 @@ class _WifiAppState extends State<WifiApp> {
           child: ListView(
             padding: EdgeInsets.all(16.0),
             children: [
-              Text('Enter Api URL:', style: TextStyle(fontSize: 18)),
+              Text('Enter the URL in this format http://x.x.x.x:5500', style: TextStyle(fontSize: 18)),
               SizedBox(height: 10),
               TextField(
                 controller: urlController,
                 decoration: InputDecoration(
-                  hintText: 'Enter the URL',
+                  hintText: 'URL',
                   border: OutlineInputBorder(),
                 ),
               ),
