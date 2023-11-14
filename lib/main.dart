@@ -33,6 +33,7 @@ class WifiApp extends StatefulWidget {
 
 class _WifiAppState extends State<WifiApp> {
   String collectedData = "No data yet";
+  bool syncStatus = false;
   Duration refreshRate = Duration(seconds: 1);
   List<PiDataModel>  databaseData= [];
   late Timer dataTimer;
@@ -94,7 +95,50 @@ class _WifiAppState extends State<WifiApp> {
     dataTimer.cancel();
   }
 
+  Future<void> fetchAndInsertArrayData() async {
+    try {
+      //api to get all data to fetch
+      final url = urlController.text + "/all";
+      if (url.isEmpty) {
+        setState(() {
+          syncStatus = false;
+        });
+        return;
+      }
+      final response = await http.get(Uri.parse(url));
+      if(response.statusCode == 200){
 
+        final jsonArrayData = json.decode(response.body);
+
+        // Convert JSON array data to a list of PiDataModel objects
+        final List<PiDataModel> piDataModels = jsonArrayData
+            .map((jsonData) => PiDataModel(
+          timeStamp: jsonData['timeStamp'],
+          temperature: jsonData['temperature'],
+          random: jsonData['random'],
+        )).toList();
+
+        // Insert the list of PiDataModel objects into the database
+        await PiDatabase.instance.insertMultipleData(piDataModels);
+
+        // Display data from the database
+        final result = await PiDatabase.instance.getdata();
+        setState(() {
+          databaseData = result;
+          syncStatus = true;
+        });
+      }
+      else{
+        setState(() {
+          syncStatus = false;
+        });
+      }
+    } catch (e) {
+      // Handle errors, if any
+      print('Error: $e');
+    }
+  }
+}
 
   Future<void> downloadCsv() async {
     final dbHelper = PiDatabase.instance;
@@ -193,6 +237,27 @@ class _WifiAppState extends State<WifiApp> {
                     color: Colors.black, // Change the text color as needed
                   ),
                 ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // Fetch array of JSON data and insert into the database
+                  fetchAndInsertArrayData();
+                },
+                child: Text('Sync All Data'),
+              ),
+              SizedBox(height: 20), // Add some spacing
+
+              // Widget to display the boolean value graphically
+              syncStatus
+                  ? Icon(
+                Icons.check,
+                color: Colors.green,
+                size: 50,
+              )
+                  : Icon(
+                Icons.clear,
+                color: Colors.red,
+                size: 50,
               ),
               SizedBox(height: 20),
               ElevatedButton(
