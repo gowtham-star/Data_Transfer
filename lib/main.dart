@@ -49,7 +49,6 @@ class _WifiAppState extends State<WifiApp> {
       fetchData(); // Fetch data periodically
     });
   }
-
   Future<void> fetchData() async {
     final url = urlController.text;
     if (url.isEmpty) {
@@ -61,7 +60,7 @@ class _WifiAppState extends State<WifiApp> {
 
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
-       final jsonData = json.decode(response.body);
+      final jsonData = json.decode(response.body);
       setState(() {
         collectedData = jsonData.toString();
       });
@@ -77,10 +76,10 @@ class _WifiAppState extends State<WifiApp> {
       dbHelper.insertdata(dataObj);
 
       //Display data from database
-       final result = await dbHelper.getdata();
-       setState(() {
-         databaseData = result;
-       });
+      final result = await dbHelper.getdata();
+      setState(() {
+        databaseData = result;
+      });
 
     } else {
       setState(() {
@@ -88,13 +87,6 @@ class _WifiAppState extends State<WifiApp> {
       });
     }
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    dataTimer.cancel();
-  }
-
   Future<void> fetchAndInsertArrayData() async {
     try {
       //api to get all data to fetch
@@ -133,13 +125,12 @@ class _WifiAppState extends State<WifiApp> {
           syncStatus = false;
         });
       }
-    } catch (e) {
+    }
+    catch (e) {
       // Handle errors, if any
       print('Error: $e');
     }
   }
-}
-
   Future<void> downloadCsv() async {
     final dbHelper = PiDatabase.instance;
     final result = await dbHelper.getdata();
@@ -197,7 +188,11 @@ class _WifiAppState extends State<WifiApp> {
     }
   }
 
-
+  @override
+  void dispose() {
+    super.dispose();
+    dataTimer.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -288,7 +283,10 @@ class _WifiAppState extends State<WifiApp> {
 
 
 
+
 }
+
+
 
 
 
