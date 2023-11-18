@@ -102,13 +102,17 @@ class _WifiAppState extends State<WifiApp> {
 
         final jsonArrayData = json.decode(response.body);
 
-        // Convert JSON array data to a list of PiDataModel objects
-        final List<PiDataModel> piDataModels = jsonArrayData
-            .map((jsonData) => PiDataModel(
-          timeStamp: jsonData['timeStamp'],
-          temperature: jsonData['temperature'],
-          random: jsonData['random'],
-        )).toList();
+        // Convert JSON array data to a list of PiDataModel objects manually
+        final List<PiDataModel> piDataModels = [];
+        for (var jsonData in jsonArrayData) {
+          PiDataModel dataModel = PiDataModel(
+            timeStamp: jsonData['timeStamp'],
+            temperature: jsonData['temperature'],
+            random: jsonData['random'],
+          );
+          piDataModels.add(dataModel);
+        }
+
 
         // Insert the list of PiDataModel objects into the database
         await PiDatabase.instance.insertMultipleData(piDataModels);
@@ -116,6 +120,7 @@ class _WifiAppState extends State<WifiApp> {
         // Display data from the database
         final result = await PiDatabase.instance.getdata();
         setState(() {
+          collectedData = "Synced all data";
           databaseData = result;
           syncStatus = true;
         });
@@ -193,7 +198,6 @@ class _WifiAppState extends State<WifiApp> {
     super.dispose();
     dataTimer.cancel();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -213,11 +217,6 @@ class _WifiAppState extends State<WifiApp> {
                   hintText: 'URL',
                   border: OutlineInputBorder(),
                 ),
-              ),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: fetchData,
-                child: Text('Fetch Data'),
               ),
               SizedBox(height: 20),
               Container(
