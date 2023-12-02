@@ -35,7 +35,6 @@ class _WifiAppState extends State<WifiApp> {
   String collectedData = "No data yet";
   bool syncStatus = false;
   Duration refreshRate = Duration(seconds: 1);
-  List<PiDataModel>  databaseData= [];
   late Timer dataTimer;
   String debugOutput = "Null";
 
@@ -74,12 +73,6 @@ class _WifiAppState extends State<WifiApp> {
         random: jsonData["random"],
       );
       dbHelper.insertdata(dataObj);
-
-      //Display data from database
-      final result = await dbHelper.getdata();
-      setState(() {
-        databaseData = result;
-      });
 
     } else {
       setState(() {
@@ -121,7 +114,6 @@ class _WifiAppState extends State<WifiApp> {
         final result = await PiDatabase.instance.getdata();
         setState(() {
           collectedData = "Synced all data";
-          databaseData = result;
           syncStatus = true;
         });
       }
@@ -262,11 +254,12 @@ class _WifiAppState extends State<WifiApp> {
               ),
               SizedBox(height: 10),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  final List<PiDataModel> databaseDatas = await PiDatabase.instance.getdata();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ChartsPage(databaseData: databaseData),
+                      builder: (context) => ChartsPage(databaseData: databaseDatas),
                     ),
                   );
                 },
