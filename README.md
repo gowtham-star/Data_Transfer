@@ -19,7 +19,12 @@ Getting up and running with our application is a breeze. Here's how to use it:
 1. **Raspberry Pi Setup**:
    - Download this repository on your Raspberry Pi.
    - Copy the `flask_app` folder to your desktop.
-   - Open the terminal on your Raspberry Pi and navigate to the `flask_app` directory.
+   - Open the terminal on your Raspberry Pi and navigate to the `flask_app` directory. (This script genrates data. You can replace this with your own script and it by default generates data.csv file)
+   ```
+     source venv/bin/activate
+     python DataGenerator.py
+   ```
+   - Open a new terminal on your Raspberry Pi and navigate to the `flask_app` directory.
    - Run the following command to start the Flask server:
      ```
      source venv/bin/activate
