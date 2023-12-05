@@ -39,6 +39,7 @@ Getting up and running with our application is a breeze. Here's how to use it:
    - Start seeing real-time data on the home screen.
    - Dive deeper by exploring interactive charts via the "View Charts" button.
    - Download data in CSV format using the "Download CSV" button.
+   - Click on Sync Button to sync previous data.
 
 Enjoy seamless data transfer and exploration!
 
@@ -65,6 +66,6 @@ We've made it easy to expand the capabilities of our application. Here's how to 
 
 Please note that both the Raspberry Pi and the mobile app should be connected to the same Wi-Fi network for seamless data transfer.
 
-Thank you for choosing  Data Transfer Wi-Fi Flutter Application. We hope you find it valuable and easy to use. If you have any questions or feedback, don't hesitate to reach out.
+Thank you for choosing  Data Transfer Wi-Fi Flutter Application. I hope you find it valuable and easy to use. If you have any questions or feedback, don't hesitate to reach out.
 
 Happy data exploration!
