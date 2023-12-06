@@ -109,9 +109,6 @@ class _WifiAppState extends State<WifiApp> {
 
         // Insert the list of PiDataModel objects into the database
         await PiDatabase.instance.insertMultipleData(piDataModels);
-
-        // Display data from the database
-        final result = await PiDatabase.instance.getdata();
         setState(() {
           collectedData = "Synced all data";
           syncStatus = true;
