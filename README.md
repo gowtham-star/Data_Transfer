@@ -1,6 +1,6 @@
 # Data Transfer using Wi-Fi Flutter Application
 
-![App Preview](app_preview.png)
+![App Preview](demo_wifi.mp4)
 
 ## Introduction
 
@@ -48,8 +48,6 @@ Getting up and running with our application is a breeze. Here's how to use it:
 
 Enjoy seamless data transfer and exploration!
 
-![Data Visualization](chart_preview.png)
-
 ## Adding New Attributes
 
 We've made it easy to expand the capabilities of our application. Here's how to add new attributes:
@@ -67,7 +65,6 @@ We've made it easy to expand the capabilities of our application. Here's how to 
 
    - In `chartspage.dart`, adapt the chart code to display the new attribute on the Y-axis.
 
-![Data Exploration](data_explore.png)
 
 Please note that both the Raspberry Pi and the mobile app should be connected to the same Wi-Fi network for seamless data transfer.
 
